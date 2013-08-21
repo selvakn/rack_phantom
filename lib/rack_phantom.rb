@@ -21,11 +21,18 @@ module RackPhantom
 
       return [status, headers, response] unless render?(headers, env)
 
-      html = Phantomjs.run('js/render.js', %['#{response}'])
-      [status, headers, html]
+      html = Phantomjs.run(render_js, %['#{response.join("\n")}']).strip
+      headers['Content-Length'] = html.length.to_s
+
+      [status, headers, [html]]
     end
 
     private
+
+    def render_js
+      File.expand_path(File.join(File.dirname(__FILE__), '..', 'js', 'render.js'))
+    end
+
     def render?(headers, env)
       html_response?(headers) && bot?(env) && get?(env)
     end
