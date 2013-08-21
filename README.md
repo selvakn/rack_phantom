@@ -1,6 +1,10 @@
 # RackPhantom
 
-TODO: Write a gem description
+Rack middlware to render single page apps (or any html page with javascript) with phantomjs and return plain html for bots.
+
+## Travis
+
+[![Build Status](https://travis-ci.org/selvakn/rack_phantom.png)](https://travis-ci.org/selvakn/rack_phantom)
 
 ## Installation
 
