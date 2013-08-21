@@ -1,5 +1,5 @@
 require 'rack_phantom/version'
-require 'selenium-webdriver'
+require 'phantomjs'
 
 module RackPhantom
   class App
@@ -9,7 +9,8 @@ module RackPhantom
 
     def call(env)
       status, header, response = @app.call(env)
-      html = `phantomjs js/render.js '#{response}'`
+
+      html = Phantomjs.run('js/render.js', %['#{response}'])
       [status, header, html]
     end
   end
