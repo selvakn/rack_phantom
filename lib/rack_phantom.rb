@@ -21,7 +21,8 @@ module RackPhantom
 
       return [status, headers, response] unless render?(headers, env)
 
-      html = Phantomjs.run(render_js, %['#{response.join("\n")}']).strip
+      response = response.join("\n").gsub("\"", "\\\"")
+      html = Phantomjs.run(render_js, %["#{response}"]).strip
       headers['Content-Length'] = html.length.to_s
 
       [status, headers, [html]]

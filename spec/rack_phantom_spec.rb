@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe RackPhantom do
 
-  let(:html) { %q{<html><head><script>document.write("Hello World");</script></head><body></body></html>} }
+  let(:html) { %q{<html><head><script>document.write("Hello' World");</script></head><body></body></html>} }
   let(:real_app) { ->(env) { [200, {'Content-Type' => 'text/html'}, [html]] } }
   let(:app) { RackPhantom::Middleware.new(real_app) }
 
@@ -19,10 +19,8 @@ describe RackPhantom do
       last_response.headers['Content-Length'].should == evaluated_html.length.to_s
     end
 
-    it 'escapes the single quotes'
-
     def evaluated_html
-      %q{<html><head><script>document.write("Hello World");</script></head><body>Hello World</body></html>}
+      %q{<html><head><script>document.write("Hello' World");</script></head><body>Hello' World</body></html>}
     end
   end
 
