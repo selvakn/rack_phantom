@@ -17,17 +17,21 @@ module RackPhantom
     end
 
     def call(env)
-      status, header, response = @app.call(env)
-      return [status, header, response] unless render?(env)
+      status, headers, response = @app.call(env)
+
+      return [status, headers, response] unless render?(headers, env)
 
       html = Phantomjs.run('js/render.js', %['#{response}'])
-      [status, header, html]
+      [status, headers, html]
     end
 
     private
+    def render?(headers, env)
+      html_response?(headers) && bot?(env) && get?(env)
+    end
 
-    def render?(env)
-      bot?(env) && get?(env)
+    def html_response?(headers)
+      headers['Content-Type'].include? 'text/html'
     end
 
     def get?(env)
