@@ -1,6 +1,6 @@
 # RackPhantom
 
-Rack middlware to render single page apps (or any html page with javascript) with phantomjs and return plain html for bots.
+Rack middleware to render single page apps (or any html page with javascript) with phantomjs and return plain html for bots.
 
 ## Travis
 
@@ -22,7 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rack App (like sinatra)
+    use RackPhantom::Middleware
+    
+### Rails App
+    Add to Gemfile. And rest is magic.
+
 
 ## Contributing
 
